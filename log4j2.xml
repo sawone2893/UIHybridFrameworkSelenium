@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO" strict="true"
+	name="XMLConfigTest" packages="com.fedex.eprs.gtc.logs">
+	<Properties>
+		<Property name="filename">./log/TestLog</Property>
+	</Properties>
+	<Appenders>
+		<Appender type="Console" name="STDOUT">
+			<Layout type="PatternLayout"
+				pattern="%d{yyyy-MM-dd HH:mm:ss}(%c)\:\:(%F\:%L)-%m%n" /><!-- class 
+				and line number -->
+		</Appender>
+		<Appender type="File" name="File" fileName="${filename}">
+			<Layout type="PatternLayout">
+				<Pattern>%d{yyyy-MM-dd HH:mm:ss}(%c)\:\:(%F\:%L)-%m%n</Pattern>
+			</Layout>
+		</Appender>
+	</Appenders>
+
+	<Loggers>
+		<Root level="info">
+			<AppenderRef ref="STDOUT" />
+			<AppenderRef ref="File"/>
+		</Root>
+	</Loggers>
+</Configuration>

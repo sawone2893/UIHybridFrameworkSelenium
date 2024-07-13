@@ -1,0 +1,4 @@
+Issue#1 Unable make field private final java.util.Comparator java.util.TreeMap.comparator' in Cucumber.
+Solution:You might be using older version of cucumber provided "info.cukes".Then upgrade to new version dependencies provided by "io.cucumber" to get this error resolved.
+Issue#2 org.openqa.selenium.InvalidSelectorException: invalid selector: An invalid or illegal selector was specified
+Solution: This error you will get when you pass wrong locator value to locator strategy like By.Name and passing value as xpath value.
