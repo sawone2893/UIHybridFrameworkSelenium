@@ -1,8 +1,8 @@
 package base.modal;
 
 import java.io.File;
+import java.time.Duration;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
@@ -39,8 +39,8 @@ public class SeleniumActions implements IActionUI {
 		launchBrowser(browserName, driverLocation);
 		jExecutor = (JavascriptExecutor) driver;
 		driver.manage().window().maximize();
-		driver.manage().timeouts().pageLoadTimeout(maxWaitTime, TimeUnit.SECONDS);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(maxWaitTime));
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 		driver.manage().deleteAllCookies();
 	}
 
@@ -89,8 +89,7 @@ public class SeleniumActions implements IActionUI {
 
 	@Override
 	public void clickElement(String locatorValue) {
-		waitUntill(locatorValue, "VISIBLE");
-		if (isElementPresent(locatorValue) && isElementDisplayedOrEnabledOrSelected(locatorValue, "ENABLED")) {
+		if (this.waitUntillElementAppear(locatorValue)) {
 			element = findElement(locatorValue);
 			waitUntill(locatorValue, "CLICKABLE");
 			element.click();
@@ -101,8 +100,7 @@ public class SeleniumActions implements IActionUI {
 
 	@Override
 	public void enterTextOnElement(String locatorValue, String textToEnter) {
-		waitUntill(locatorValue, "VISIBLE");
-		if (isElementPresent(locatorValue) && isElementDisplayedOrEnabledOrSelected(locatorValue, "ENABLED")) {
+		if (this.waitUntillElementAppear(locatorValue)) {
 			element = findElement(locatorValue);
 			element.sendKeys(textToEnter);
 		} else {
@@ -117,7 +115,7 @@ public class SeleniumActions implements IActionUI {
 			element = findElement(locatorValue);
 			Function<WebDriver, Boolean> function = new Function<WebDriver, Boolean>() {
 				public Boolean apply(WebDriver driver) {
-					WebDriverWait wait = new WebDriverWait(driver, maxWaitTime);
+					WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(maxWaitTime));
 					switch (conditionName.toUpperCase()) {
 					case "CLICKABLE": {
 						wait.until(ExpectedConditions.elementToBeClickable(element));
@@ -150,14 +148,14 @@ public class SeleniumActions implements IActionUI {
 
 	public void setFluentWait(Function<WebDriver, Boolean> function) {
 		FluentWait<WebDriver> fluentWait = new FluentWait<WebDriver>(driver);
-		fluentWait.pollingEvery(500, TimeUnit.MILLISECONDS);
-		fluentWait.withTimeout(maxWaitTime, TimeUnit.SECONDS);
+		fluentWait.pollingEvery(Duration.ofMillis(500));
+		fluentWait.withTimeout(Duration.ofSeconds(maxWaitTime));
 		fluentWait.ignoring(NoSuchElementException.class);
 		fluentWait.until(function);
 	}
 
 	public void setWebDriverWait(Function<WebDriver, Boolean> function, int time) {
-		Wait<WebDriver> wait = new WebDriverWait(driver, maxWaitTime);
+		Wait<WebDriver> wait = new WebDriverWait(driver, Duration.ofSeconds(maxWaitTime));
 		wait.until(function);
 
 	}
@@ -238,18 +236,9 @@ public class SeleniumActions implements IActionUI {
 		}
 	}
 
-	/*
-	 * @Override public byte[] takeScreenshotAsBytes() { byte[] screenshotAsBytes =
-	 * null; try { screenshotAsBytes = ((TakesScreenshot)
-	 * driver).getScreenshotAs(OutputType.BYTES); } catch (Exception e) {
-	 * e.printStackTrace(); }
-	 * 
-	 * return screenshotAsBytes; }
-	 */
-
 	@Override
 	public void jsClick(String locatorValue) {
-		if (isElementPresent(locatorValue)) {
+		if (this.waitUntillElementAppear(locatorValue)) {
 			element = findElement(locatorValue);
 			jExecutor.executeScript("arguments[0].click();", element);
 		} else {
@@ -260,8 +249,7 @@ public class SeleniumActions implements IActionUI {
 
 	public String getText(String locatorValue) {
 		String textValue = null;
-		waitUntill(locatorValue, "VISIBLE");
-		if (isElementPresent(locatorValue)) {
+		if (this.waitUntillElementAppear(locatorValue)) {
 			element = findElement(locatorValue);
 			textValue = element.getText().trim();
 		} else {
@@ -271,7 +259,7 @@ public class SeleniumActions implements IActionUI {
 	}
 
 	public void scrollToElement(String locatorValue) {
-		if (isElementPresent(locatorValue)) {
+		if (this.waitUntillElementAppear(locatorValue)) {
 			element = findElement(locatorValue);
 			jExecutor.executeScript("arguments[0].scrollIntoView(true);", element);
 
@@ -326,6 +314,52 @@ public class SeleniumActions implements IActionUI {
 		}
 		return element;
 
+	}
+
+	@Override
+	public boolean waitUntillElementAppear(String locatorValue) {
+		boolean status = true;
+		long startTime, endTime;
+		startTime = System.currentTimeMillis();
+		try {
+			while (!(this.isElementPresent(locatorValue))) {
+				System.out.println("Waiting for Element[" + locatorValue + "] to be appear...");
+				this.waitForElement(1);
+				endTime = System.currentTimeMillis();
+				if (endTime - startTime > maxWaitTime * 1000) {
+					break;
+				}
+			}
+
+		} catch (Exception e) {
+			status = false;
+			System.out.println("Element:: " + locatorValue + " is not appear within the specified timeout");
+			e.printStackTrace();
+		}
+		return status;
+	}
+
+	@Override
+	public boolean waitUntillElementDisappear(String locatorValue) {
+		boolean status = true;
+		long startTime, endTime;
+		startTime = System.currentTimeMillis();
+		try {
+			while ((this.isElementPresent(locatorValue))) {
+				System.out.println("Waiting for Element[" + locatorValue + "] to be disappear...");
+				this.waitForElement(1);
+				endTime = System.currentTimeMillis();
+				if (endTime - startTime > maxWaitTime * 1000) {
+					break;
+				}
+			}
+
+		} catch (Exception e) {
+			status = false;
+			System.out.println("Element:: " + locatorValue + " is not disappear within the specified timeout");
+			e.printStackTrace();
+		}
+		return status;
 	}
 
 }

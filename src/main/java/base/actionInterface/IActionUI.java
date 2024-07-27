@@ -45,4 +45,8 @@ public interface IActionUI {
 
 	public void scrollToElement(String locatorValue);
 
+	public boolean waitUntillElementAppear(String locatorValue);
+
+	public boolean waitUntillElementDisappear(String locatorValue);
+
 }
