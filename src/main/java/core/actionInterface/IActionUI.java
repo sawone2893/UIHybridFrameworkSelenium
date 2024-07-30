@@ -1,4 +1,4 @@
-package base.actionInterface;
+package core.actionInterface;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import org.openqa.selenium.WebElement;
 
 public interface IActionUI {
 
-	public void initialize(String browserName, String driverLocation, boolean isHeadless);
+	public void initialize(String browserName, boolean isHeadless);
 
 	public void closeBrowser();
 
@@ -40,7 +40,6 @@ public interface IActionUI {
 
 	public void waitUntill(final String locatorValue, final String conditionName);
 
-	// public byte [] takeScreenshotAsBytes();
 	public void waitForPageLoad(int timeInSeconds);
 
 	public void scrollToElement(String locatorValue);

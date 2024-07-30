@@ -1,4 +1,4 @@
-package factory;
+package base.instancesFactory;
 
 import actions.TestExecutor;
 import actions.TestSteps;

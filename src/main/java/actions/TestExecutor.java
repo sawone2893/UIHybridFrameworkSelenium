@@ -2,7 +2,8 @@ package actions;
 
 import org.testng.Assert;
 
-import base.BaseClass;
+import base.driverFactory.BaseClass;
+import utililties.PropertyManager;
 
 public class TestExecutor{
 
@@ -55,8 +56,22 @@ public class TestExecutor{
 		}
 	}
 	
-	public String getLocator(String locatorIdentifier, String parameters){
-		String locatorValue=BaseClass.replacePath(locatorIdentifier,parameters);
+	public String generateLocator(String locatorIdentifier, String paramValues){
+		String xpath = PropertyManager.getAnyProperty("locators", locatorIdentifier);
+		String locatorValue = xpath;
+		if (paramValues.contains("~")) {
+			String[] parameters = paramValues.split("~");
+			int j = parameters.length;
+			// logger_method().info(j);
+			for (int i = 0; i < j; i++) {
+				String replacement = parameters[i];
+				locatorValue = xpath.replace("$" + i + "$", replacement);
+				xpath = locatorValue;
+			}
+		} else {
+			locatorValue = xpath.replace("$0$", paramValues);
+			xpath = locatorValue;
+		}
 		System.out.println("LOCATOR_VALUE: "+locatorValue);
 		return locatorValue;
 	}

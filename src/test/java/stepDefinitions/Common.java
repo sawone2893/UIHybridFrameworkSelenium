@@ -2,7 +2,7 @@ package stepDefinitions;
 
 import actions.TestExecutor;
 import actions.TestSteps;
-import factory.FactoryRegistry;
+import base.instancesFactory.FactoryRegistry;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -20,7 +20,7 @@ public class Common {
 	@Then("I {string} on {string} with values {string}")
 	public void iOnWithValues(String action,String locatorIdentifier,String param){
 		steps.setAction(action);
-		steps.setLocator(testExecutor.getLocator(locatorIdentifier, param));
+		steps.setLocator(testExecutor.generateLocator(locatorIdentifier, param));
 		testExecutor.executeAction(steps);
 	}
 	
@@ -42,7 +42,7 @@ public class Common {
 	public void iForWithValues(String action,String value,String locatorIdentifier,String param){
 		steps.setAction(action);
 		steps.setValue(value);
-		steps.setLocator(testExecutor.getLocator(locatorIdentifier, param));
+		steps.setLocator(testExecutor.generateLocator(locatorIdentifier, param));
 		testExecutor.executeAction(steps);
 	    
 	}
@@ -55,7 +55,7 @@ public class Common {
 	public void iIsForWithValues(String action,String value,String locatorIdentifier,String param){
 		steps.setAction(action);
 		steps.setValue(value);
-		steps.setLocator(testExecutor.getLocator(locatorIdentifier, param));
+		steps.setLocator(testExecutor.generateLocator(locatorIdentifier, param));
 		testExecutor.executeAction(steps);
 	}
 	

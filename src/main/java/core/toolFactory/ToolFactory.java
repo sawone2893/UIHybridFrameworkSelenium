@@ -1,18 +1,18 @@
-package base.driverFactory;
+package core.toolFactory;
 
-import base.actionInterface.IActionUI;
-import base.modal.SeleniumActions;
+import core.actionInterface.IActionUI;
+import core.modal.UiActionsSelenium;
 
-public class DriverFactory {
+public class ToolFactory {
 	
 	static IActionUI actionUI=null;
 
 	
-	public static IActionUI uiDriverInstance(String uiDriverName) {
+	public static IActionUI uiToolInstance(String uiDriverName) {
 		switch (uiDriverName.toLowerCase()) {
 		case "selenium":{
 			System.out.println("Create Instance for "+uiDriverName);
-			actionUI = new SeleniumActions();
+			actionUI = new UiActionsSelenium();
 			break;
 		}
 		default:{

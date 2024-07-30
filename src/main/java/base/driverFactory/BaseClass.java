@@ -1,17 +1,16 @@
-package base;
+package base.driverFactory;
 
-import base.actionInterface.IActionUI;
-import base.driverFactory.DriverFactory;
 import config.ConfigProp;
-import utililties.PropertyManager;
+import core.actionInterface.IActionUI;
+import core.toolFactory.ToolFactory;
 
 public class BaseClass {
 
 	public static IActionUI globalUIDriver = null;
 
 	public static void appStart() {
-		globalUIDriver = DriverFactory.uiDriverInstance(ConfigProp.UI_DRIVER_NAME);
-		globalUIDriver.initialize(ConfigProp.BROWSER_NAME, ConfigProp.CHROME_DRIVER_PATH, false);
+		globalUIDriver = ToolFactory.uiToolInstance(ConfigProp.UI_TOOL_NAME);
+		globalUIDriver.initialize(ConfigProp.BROWSER_NAME, ConfigProp.IS_HEADLESS_MODE);
 		globalUIDriver.openURL(ConfigProp.APP_URL);
 	}
 
@@ -27,11 +26,6 @@ public class BaseClass {
 		globalUIDriver.enterTextOnElement(locatorValue, textToEnter);
 	}
 
-	/*
-	 * public static byte[] snapAsBytes() { return
-	 * globalUIDriver.takeScreenshotAsBytes(); }
-	 */
-
 	public static void waitForPageToBeLoad(int timeInSeconds) {
 		globalUIDriver.waitForPageLoad(timeInSeconds);
 	}
@@ -44,25 +38,7 @@ public class BaseClass {
 		globalUIDriver.scrollToElement(locatorValue);
 	}
 
-	public static String replacePath(String locatorIdentifier, String values) {
-		String xpath = PropertyManager.getAnyProperty("locators", locatorIdentifier);
-		String newPath = xpath;
-		if (values.contains("~")) {
-			String[] parameters = values.split("~");
-			int j = parameters.length;
-			// logger_method().info(j);
-			for (int i = 0; i < j; i++) {
-				String replacement = parameters[i];
-				newPath = xpath.replace("$" + i + "$", replacement);
-				xpath = newPath;
-			}
-		} else {
-			newPath = xpath.replace("$0$", values);
-			xpath = newPath;
-		}
-		return newPath;
-	}
-
+	
 	public static void waitUntill(String locatorValue, String conditionName) {
 		globalUIDriver.waitUntill(locatorValue, conditionName);
 	}

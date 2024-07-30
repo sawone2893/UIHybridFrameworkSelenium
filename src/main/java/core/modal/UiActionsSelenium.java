@@ -1,8 +1,10 @@
-package base.modal;
+package core.modal;
 
 import java.io.File;
 import java.time.Duration;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
@@ -14,6 +16,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -24,56 +27,31 @@ import org.testng.Assert;
 
 import com.google.common.base.Function;
 
-import base.actionInterface.IActionUI;
+import base.driverFactory.DriverManager;
+import base.driverFactory.DriverManagerFactory;
 import config.ConfigProp;
+import core.actionInterface.IActionUI;
 
-public class SeleniumActions implements IActionUI {
+public class UiActionsSelenium implements IActionUI {
 
-	private static WebDriver driver;
+	DriverManager driverManager;
+	WebDriver driver;
 	private static WebElement element = null;
 	private int maxWaitTime = ConfigProp.MAX_WAIT_TIME;
 	JavascriptExecutor jExecutor = null;
 
 	@Override
-	public void initialize(String browserName, String driverLocation, boolean isHeadless) {
-		launchBrowser(browserName, driverLocation);
+	public void initialize(String browserType, boolean isHeadless) {
+		driverManager = DriverManagerFactory.getManager(browserType);
+		driver = driverManager.getDriver(isHeadless);
 		jExecutor = (JavascriptExecutor) driver;
 		driver.manage().window().maximize();
-		driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(maxWaitTime));
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 		driver.manage().deleteAllCookies();
-	}
-
-	public void launchBrowser(String browserName, String driverLocation) {
-		switch (browserName.toLowerCase()) {
-		case "chrome": {
-			System.out.println("Initializing " + browserName + " browser...");
-			System.setProperty("webdriver.chrome.driver", driverLocation);
-			driver = new ChromeDriver();
-			break;
-		}
-		case "firefox": {
-			System.out.println("Initializing " + browserName + " browser...");
-			System.setProperty("webdriver.gecko.driver", driverLocation);
-			driver = new FirefoxDriver();
-			break;
-		}
-		case "edge": {
-			System.out.println("Initializing " + browserName + " browser...");
-			System.setProperty("webdriver.edge.driver", driverLocation);
-			driver = new EdgeDriver();
-			break;
-		}
-		default:
-			Assert.assertTrue(false, "Unsupported Browse Name: " + browserName);
-		}
 	}
 
 	@Override
 	public void closeBrowser() {
-		System.out.println("Closing broswer...");
-		driver.close();
-		driver.quit();
+		driverManager.quitDriver();
 	}
 
 	@Override
@@ -211,7 +189,7 @@ public class SeleniumActions implements IActionUI {
 	public String getAttributeValue(String locatorValue, String attributeName) {
 		String attributeValue = null;
 		waitUntill(locatorValue, "VISIBLE");
-		if (isElementPresent(locatorValue)) {
+		if (this.waitUntillElementAppear(locatorValue)) {
 			element = findElement(locatorValue);
 			attributeValue = element.getAttribute(attributeName);
 		} else {
@@ -271,14 +249,10 @@ public class SeleniumActions implements IActionUI {
 
 	public boolean isElementPresent(String locatorValue) {
 		boolean status = false;
-		if (findElements(locatorValue).size() > 0) {
-			if (isElementDisplayedOrEnabledOrSelected(locatorValue, "DISPLAYED")) {
-				status = true;
-			} else {
-				status = false;
-			}
-		} else {
-			status = false;
+
+		if (findElements(locatorValue).size() > 0 && isElementDisplayedOrEnabledOrSelected(locatorValue, "DISPLAYED")
+				&& isElementDisplayedOrEnabledOrSelected(locatorValue, "ENABLED")) {
+			status = true;
 		}
 		return status;
 
