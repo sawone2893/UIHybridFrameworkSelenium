@@ -8,6 +8,7 @@ public interface IActionUI {
 
 	public void initialize(String browserName, boolean isHeadless);
 
+	public void closeCurrentTabWindow();
 	public void closeBrowser();
 
 	public void openURL(String url);
@@ -30,7 +31,8 @@ public interface IActionUI {
 
 	public String getURL();
 
-	public void takeScreenshot(String screenshotName);
+	public void takeScreenshot(String screenshotPath);
+	public void takeScreenshot(String locatorValue,String screenshotPath);
 
 	public void jsClick(String locatorValue);
 
@@ -42,10 +44,16 @@ public interface IActionUI {
 
 	public void waitForPageLoad(int timeInSeconds);
 
-	public void scrollToElement(String locatorValue);
+	public void scrollToElement(String locatorValue,String scrollType);
 
 	public boolean waitUntillElementAppear(String locatorValue);
 
 	public boolean waitUntillElementDisappear(String locatorValue);
+	public void navigateTo(String direction);
+	public void performWindowTabSwitch(int windowTabIndex);
+	public void createNewWindowTabSwitch(String type);
+	public void hoverElement(String locatorValue);
+	public void rightClickElement(String locatorValue);
+	public void doubleClickElement(String locatorValue);
 
 }

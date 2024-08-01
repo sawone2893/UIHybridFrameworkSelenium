@@ -2,9 +2,7 @@ package core.modal;
 
 import java.io.File;
 import java.time.Duration;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
@@ -15,10 +13,8 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.WindowType;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
@@ -47,6 +43,11 @@ public class UiActionsSelenium implements IActionUI {
 		jExecutor = (JavascriptExecutor) driver;
 		driver.manage().window().maximize();
 		driver.manage().deleteAllCookies();
+	}
+
+	@Override
+	public void closeCurrentTabWindow() {
+		driver.close();
 	}
 
 	@Override
@@ -205,10 +206,18 @@ public class UiActionsSelenium implements IActionUI {
 	}
 
 	@Override
-	public void takeScreenshot(String screenshotName) {
+	public void takeScreenshot(String screenshotPath) {
 		try {
-			FileUtils.copyFile(((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE),
-					new File(System.getProperty("user.dir") + "\\Screenshots\\" + screenshotName + ".png"));
+			FileUtils.copyFile(((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE), new File(screenshotPath));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void takeScreenshot(String locatorValue, String screenshotPath) {
+		try {
+			FileUtils.copyFile(findElement(locatorValue).getScreenshotAs(OutputType.FILE), new File(screenshotPath));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -236,10 +245,14 @@ public class UiActionsSelenium implements IActionUI {
 		return textValue;
 	}
 
-	public void scrollToElement(String locatorValue) {
+	public void scrollToElement(String locatorValue, String scrollType) {
 		if (this.waitUntillElementAppear(locatorValue)) {
 			element = findElement(locatorValue);
-			jExecutor.executeScript("arguments[0].scrollIntoView(true);", element);
+			if (scrollType.equalsIgnoreCase("NORMAL")) {
+				new Actions(driver).scrollToElement(element).perform();
+			} else {
+				jExecutor.executeScript("arguments[0].scrollIntoView(true);", element);
+			}
 
 		} else {
 			Assert.assertTrue(false, "Unable to perform scroll: Web Element is not present");
@@ -334,6 +347,81 @@ public class UiActionsSelenium implements IActionUI {
 			e.printStackTrace();
 		}
 		return status;
+	}
+
+	@Override
+	public void navigateTo(String direction) {
+
+		switch (direction.toUpperCase()) {
+
+		case "FORWARD":
+			driver.navigate().forward();
+			break;
+		case "BACK":
+			driver.navigate().back();
+			break;
+		case "REFRESH":
+			driver.navigate().refresh();
+			break;
+		default:
+			System.out.println("Unspported Direction: " + direction);
+
+		}
+
+	}
+
+	@Override
+	public void performWindowTabSwitch(int windowTabIndex) {
+		Object[] windowHandles = driver.getWindowHandles().toArray();
+		driver.switchTo().window((String) windowHandles[windowTabIndex]);
+	}
+
+	@Override
+	public void createNewWindowTabSwitch(String type) {
+		if (type.equalsIgnoreCase("WINDOW")) {
+			driver.switchTo().newWindow(WindowType.WINDOW);
+		} else {
+			driver.switchTo().newWindow(WindowType.TAB);
+		}
+	}
+
+	@Override
+	public void hoverElement(String locatorValue) {
+		if (this.waitUntillElementAppear(locatorValue)) {
+			element = findElement(locatorValue);
+			new Actions(driver)
+            .moveToElement(element)
+            .perform();
+		} else {
+			Assert.assertTrue(false, "Unable to do hover: Web Element is not present");
+		}
+		
+	}
+
+	@Override
+	public void rightClickElement(String locatorValue) {
+		if (this.waitUntillElementAppear(locatorValue)) {
+			element = findElement(locatorValue);
+			new Actions(driver)
+            .contextClick(element)
+            .perform();
+		} else {
+			Assert.assertTrue(false, "Unable to do right click: Web Element is not present");
+		}
+		
+	}
+
+	@Override
+	public void doubleClickElement(String locatorValue) {
+		if (this.waitUntillElementAppear(locatorValue)) {
+			element = findElement(locatorValue);
+			 new Actions(driver)
+             .doubleClick(element)
+             .perform();
+		} else {
+			Assert.assertTrue(false, "Unable to do double : Web Element is not present");
+		}
+		
 	}
 
 }

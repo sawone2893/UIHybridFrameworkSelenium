@@ -1,6 +1,6 @@
 package hooks;
 
-import base.driverFactory.BaseClass;
+import base.common.BaseClass;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;

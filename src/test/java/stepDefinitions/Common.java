@@ -1,7 +1,7 @@
 package stepDefinitions;
 
-import actions.TestExecutor;
-import actions.TestSteps;
+import actionsKeyword.TestExecutor;
+import actionsKeyword.TestSteps;
 import base.instancesFactory.FactoryRegistry;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;

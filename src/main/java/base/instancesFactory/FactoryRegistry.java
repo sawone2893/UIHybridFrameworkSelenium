@@ -1,7 +1,7 @@
 package base.instancesFactory;
 
-import actions.TestExecutor;
-import actions.TestSteps;
+import actionsKeyword.TestExecutor;
+import actionsKeyword.TestSteps;
 
 public class FactoryRegistry {
 	public static TestExecutor getTestExecutor(){return TestExecutor.getInstance();}

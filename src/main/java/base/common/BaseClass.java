@@ -1,4 +1,4 @@
-package base.driverFactory;
+package base.common;
 
 import config.ConfigProp;
 import core.actionInterface.IActionUI;
@@ -35,7 +35,7 @@ public class BaseClass {
 	}
 
 	public static void scrollToElement(String locatorValue) {
-		globalUIDriver.scrollToElement(locatorValue);
+		globalUIDriver.scrollToElement(locatorValue,"NORMAL");
 	}
 
 	
