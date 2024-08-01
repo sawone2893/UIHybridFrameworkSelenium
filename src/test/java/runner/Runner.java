@@ -8,9 +8,7 @@ import io.cucumber.testng.CucumberOptions;
 		dryRun=!true,
 		monochrome=true,
 		glue={"stepDefinitions","hooks"},
-		plugin = {"com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:",
-				"summary"
-				},
+		plugin = {"json:target/cucumber.json"},
 		tags="@sanity"
 		)
 public class Runner extends AbstractTestNGCucumberTests{

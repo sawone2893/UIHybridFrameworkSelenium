@@ -1,5 +1,5 @@
-git clone https://github.com/sawone2893/SeleniumCucumberJava.git
-
+git clone <repoURL>
+git clone --branch <branchname> <remote-repo-url>
 Step 1 : Create GitHub account and SignIn
 Step 2 : Start a Project = Create a repository
 Step 3 : Start Eclipse
