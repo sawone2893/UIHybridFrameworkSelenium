@@ -1,4 +1,4 @@
-package base.driverFactory;
+package driverFactory;
 
 public class DriverManagerFactory {
 	public static DriverManager getManager(String browsertype) {

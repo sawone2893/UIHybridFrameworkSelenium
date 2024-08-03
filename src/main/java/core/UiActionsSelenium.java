@@ -1,4 +1,4 @@
-package core.modal;
+package core;
 
 import java.io.File;
 import java.time.Duration;
@@ -23,10 +23,9 @@ import org.testng.Assert;
 
 import com.google.common.base.Function;
 
-import base.driverFactory.DriverManager;
-import base.driverFactory.DriverManagerFactory;
 import config.ConfigProp;
-import core.actionInterface.IActionUI;
+import driverFactory.DriverManager;
+import driverFactory.DriverManagerFactory;
 
 public class UiActionsSelenium implements IActionUI {
 

@@ -1,4 +1,4 @@
-package core.actionInterface;
+package core;
 
 import java.util.List;
 

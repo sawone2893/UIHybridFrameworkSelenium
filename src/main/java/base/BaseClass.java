@@ -1,8 +1,8 @@
-package base.common;
+package base;
 
 import config.ConfigProp;
-import core.actionInterface.IActionUI;
-import core.toolFactory.ToolFactory;
+import core.IActionUI;
+import core.ToolFactory;
 
 public class BaseClass {
 

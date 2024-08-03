@@ -8,12 +8,11 @@ import java.util.Properties;
 
 public class PropertyManager {
 	
-	public static String getAnyProperty(String propFileName,String configPropName) {
+	public static String getAnyProperty(String propFileLocation,String configPropName) {
 		String value = null;
 		try {
 			Properties property = new Properties();
-			String filepath=System.getProperty("user.dir")+"\\src\\main\\java\\resources\\"+propFileName+".properties";
-			FileInputStream fis = new FileInputStream(new File(filepath));
+			FileInputStream fis = new FileInputStream(new File(propFileLocation+".properties"));
 			property.load(fis);
 			value = property.getProperty(configPropName);
 			fis.close();

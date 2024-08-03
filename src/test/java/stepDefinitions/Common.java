@@ -2,15 +2,15 @@ package stepDefinitions;
 
 import actionsKeyword.TestExecutor;
 import actionsKeyword.TestSteps;
-import base.instancesFactory.FactoryRegistry;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import pageInstancesFactory.PageInstanceFactory;
 
 public class Common {
 	
-	TestExecutor testExecutor=FactoryRegistry.getTestExecutor();
-	TestSteps steps=FactoryRegistry.getTestSteps();
+	TestExecutor testExecutor=PageInstanceFactory.getTestExecutor();
+	TestSteps steps=PageInstanceFactory.getTestSteps();
 	
 	/*Example:
 	 * Then I "Click" on "Button" with values "Login"

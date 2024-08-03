@@ -1,4 +1,4 @@
-package base.driverFactory;
+package driverFactory;
 
 import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.firefox.FirefoxDriver;

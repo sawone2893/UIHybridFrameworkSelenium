@@ -2,7 +2,8 @@ package actionsKeyword;
 
 import org.testng.Assert;
 
-import base.common.BaseClass;
+import base.BaseClass;
+import config.ConfigProp;
 import utililties.PropertyManager;
 
 public class TestExecutor{
@@ -57,7 +58,7 @@ public class TestExecutor{
 	}
 	
 	public String generateLocator(String locatorIdentifier, String paramValues){
-		String xpath = PropertyManager.getAnyProperty("locators", locatorIdentifier);
+		String xpath = PropertyManager.getAnyProperty(ConfigProp.LOCATORS_PATH+"locators", locatorIdentifier);
 		String locatorValue = xpath;
 		if (paramValues.contains("~")) {
 			String[] parameters = paramValues.split("~");

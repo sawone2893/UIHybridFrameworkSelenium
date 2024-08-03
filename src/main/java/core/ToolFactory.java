@@ -1,7 +1,4 @@
-package core.toolFactory;
-
-import core.actionInterface.IActionUI;
-import core.modal.UiActionsSelenium;
+package core;
 
 public class ToolFactory {
 	

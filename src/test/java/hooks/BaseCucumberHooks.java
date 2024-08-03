@@ -1,6 +1,6 @@
 package hooks;
 
-import base.common.BaseClass;
+import base.BaseClass;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
