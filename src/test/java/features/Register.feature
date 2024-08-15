@@ -2,7 +2,7 @@ Feature: User Registration
 
   @sanity
   Scenario Outline: User Register on the website
-    Given I "WaitForPageToBeLoad" "10" seconds
+    Given I "VerifyPageTitle" "A place to practice your automation skills!"
     When I perform click on multiple web element using following dataset
       | locatorIdentifier        | params              |
       | TagWithText              | a~Login or register |
@@ -40,5 +40,5 @@ Feature: User Registration
     Then I "VerifyVisibility" is "true" for "TagWithText" with values "span~<accountConfirmationText>"
 
     Examples: 
-      | firstname | lastname | email             | address_1 | country | state           | city  | postcode | loginname | password | accountConfirmationText       |
-      | Shabbir   | Rayeen   | xyz1263@gmail.com | ABC Nagar | India   | Salomon Islands | Konch |   285205 | Shab28932 |   123456 | Your Account Has Been Created |
+      | firstname | lastname | email              | address_1 | country | state           | city  | postcode | loginname | password | accountConfirmationText       |
+      | Shabbir   | Rayeen   | xyz13263@gmail.com | ABC Nagar | India   | Salomon Islands | Konch |   285205 | Shab28932 |   123456 | Your Account Has Been Created |

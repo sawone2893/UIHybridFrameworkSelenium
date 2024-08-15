@@ -8,7 +8,8 @@ import io.cucumber.testng.CucumberOptions;
 		dryRun=!true,
 		monochrome=true,
 		glue={"stepDefinitions","hooks"},
-		plugin = {"json:target/cucumber.json"},
+		//plugin = {"json:target/cucumber.json"},
+		plugin = {"pretty"},
 		tags="@sanity"
 		)
 public class Runner extends AbstractTestNGCucumberTests{

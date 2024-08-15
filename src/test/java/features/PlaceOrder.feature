@@ -2,13 +2,15 @@ Feature: User Place Order
 
   @sanity
   Scenario Outline: Verify user is able to place order
-    Given I "WaitForPageToBeLoad" "10" seconds
+    Given I "VerifyPageTitle" "A place to practice your automation skills!"
     When I "Click" on "TagWithText" with values "a~Login or register"
+    Then I "VerifyPageTitle" "Account Login"
     When I perform following actions using dataset
       | action     | value       | locatorIdentifier | params               |
       | EnterValue | <loginname> | TagWithAttribute  | input~name~loginname |
       | EnterValue | <password>  | TagWithAttribute  | input~name~password  |
     And I "Click" on "ButtonWithText" with values "Login"
+    Then I "VerifyPageTitle" "My Account"
     Then I "VerifyVisibility" is "true" for "TagWithText" with values "div~Welcome back Shabbir"
     When I perform click on multiple web element using following dataset
       | locatorIdentifier        | params                                                                  |

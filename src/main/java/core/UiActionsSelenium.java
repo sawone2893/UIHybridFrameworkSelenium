@@ -205,21 +205,28 @@ public class UiActionsSelenium implements IActionUI {
 	}
 
 	@Override
-	public void takeScreenshot(String screenshotPath) {
+	public String takeScreenshot(String screenshotPath) {
+		String screenshot = null;
 		try {
+			screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BASE64);
 			FileUtils.copyFile(((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE), new File(screenshotPath));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		return screenshot;
 	}
 
 	@Override
-	public void takeScreenshot(String locatorValue, String screenshotPath) {
+	public String takeScreenshot(String locatorValue, String screenshotPath) {
+		String screenshot= null;
 		try {
+			screenshot = findElement(locatorValue).getScreenshotAs(OutputType.BASE64);
 			FileUtils.copyFile(findElement(locatorValue).getScreenshotAs(OutputType.FILE), new File(screenshotPath));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return screenshot;
 	}
 
 	@Override
@@ -421,6 +428,11 @@ public class UiActionsSelenium implements IActionUI {
 			Assert.assertTrue(false, "Unable to do double : Web Element is not present");
 		}
 		
+	}
+	
+	@Override
+	public String getTitle() {
+		return driver.getTitle();
 	}
 
 }

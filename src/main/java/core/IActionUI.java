@@ -31,8 +31,8 @@ public interface IActionUI {
 
 	public String getURL();
 
-	public void takeScreenshot(String screenshotPath);
-	public void takeScreenshot(String locatorValue,String screenshotPath);
+	public String takeScreenshot(String screenshotPath);
+	public String takeScreenshot(String locatorValue,String screenshotPath);
 
 	public void jsClick(String locatorValue);
 
@@ -55,5 +55,6 @@ public interface IActionUI {
 	public void hoverElement(String locatorValue);
 	public void rightClickElement(String locatorValue);
 	public void doubleClickElement(String locatorValue);
+	public  String getTitle();
 
 }

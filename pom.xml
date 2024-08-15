@@ -51,7 +51,6 @@
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
 			<version>${testng.version}</version>
-			<scope>test</scope>
 		</dependency>
 		<!-- Below dependencies are added just resolve Error: Failed to load
 		class "org.slf4j.impl.StaticMDCBinder -->
@@ -95,16 +94,22 @@
 			<version>${gherkin.version}</version>
 		</dependency>
 		<!-- Cucumber Ends Here -->
-		
-		<!-- Cucumber Extent Reports Jars Start -->
+
+		<!--Extent Reports Jars Start -->
+		<!-- Extent Reports Dependencies -->
 		<dependency>
-			<groupId>net.masterthought</groupId>
-			<artifactId>maven-cucumber-reporting</artifactId>
-			<version>5.8.1</version>
+			<groupId>com.aventstack</groupId>
+			<artifactId>extentreports</artifactId>
+			<version>5.1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.freemarker</groupId>
+			<artifactId>freemarker</artifactId>
+			<version>2.3.33</version>
 		</dependency>
 
-		<!-- Cucumber Extent Reports Jars End -->
-		
+		<!--Extent Reports Jars End -->
+
 		<!-- Logging Framework Jars Start -->
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
@@ -117,7 +122,7 @@
 			<version>${log4jweb.version}</version>
 		</dependency>
 		<!-- Logging Framework Jars End -->
-		
+
 		<!-- Excel Handling Jars Start -->
 
 		<dependency>
@@ -137,7 +142,7 @@
 			<artifactId>xmlbeans</artifactId>
 			<version>${xmlbeans.version}</version>
 		</dependency>
-		
+
 		<!-- Excel Handling Jars End -->
 
 	</dependencies>

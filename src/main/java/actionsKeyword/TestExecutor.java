@@ -40,25 +40,33 @@ public class TestExecutor{
 			BaseClass.scrollToElement(steps.getLocator());
 			break;
 		}case "VerifyAttributeValue":{
+			BaseClass.waitUntillElementAppear(steps.getLocator());
 			String attriValue[]=steps.getValue().split("|");
 			String status=BaseClass.getElementAttribute(steps.getLocator(),attriValue[0]);
 			Assert.assertEquals(status, attriValue[1],"Expected: "+attriValue[1]+" Actual: "+status);
 			break;
 		}case "VerifyTextValue":{
+			BaseClass.waitUntillElementAppear(steps.getLocator());
 			String textValue=BaseClass.getElementText(steps.getLocator());
 			Assert.assertEquals(textValue, steps.getValue(),"Expected: "+steps.getValue()+" Actual: "+textValue);
 			break;
 		}case "VerifyVisibility":{
+			BaseClass.waitUntillElementAppear(steps.getLocator());
 			boolean status=BaseClass.isElementDisplayedOrEnabledOrSelected(steps.getLocator(), "DISPLAYED");
 			Assert.assertEquals(status,Boolean.parseBoolean(steps.getValue()));
 			break;
-		}default:
+		}case "VerifyPageTitle":{
+			String actualTitle=BaseClass.getTitle();
+			Assert.assertEquals(actualTitle,steps.getValue());
+			break;
+		}
+		default:
 			Assert.assertTrue(false, steps.getAction() + "is not defined.Please define your action in the TestExecutor Class.");
 		}
 	}
 	
 	public String generateLocator(String locatorIdentifier, String paramValues){
-		String xpath = PropertyManager.getAnyProperty(ConfigProp.LOCATORS_PATH+"locators", locatorIdentifier);
+		String xpath = PropertyManager.getAnyProperty(ConfigProp.LOCATORS_PATH, locatorIdentifier);
 		String locatorValue = xpath;
 		if (paramValues.contains("~")) {
 			String[] parameters = paramValues.split("~");

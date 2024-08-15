@@ -58,5 +58,21 @@ public class BaseClass {
 	public static String getElementText(String locatorValue) {
 		return globalUIDriver.getText(locatorValue);
 	}
+	
+	public static void waitUntillElementAppear(String locatorValue) {
+		globalUIDriver.waitUntillElementAppear(locatorValue);
+	}
+	
+	public static String snap(String screenshotPath) {
+		return globalUIDriver.takeScreenshot(System.getProperty("user.dir")+screenshotPath);
+	}
+	
+	public static String snap(String locatorValue,String screenshotPath) {
+		return globalUIDriver.takeScreenshot(locatorValue,System.getProperty("user.dir")+screenshotPath);
+	}
+	
+	public static String getTitle() {
+		return globalUIDriver.getTitle();
+	}
 
 }
