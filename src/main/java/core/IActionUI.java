@@ -64,8 +64,11 @@ public interface IActionUI {
 
 	public String getPageTitle();
 
-	public void switchToParenTabWindow();
+	public void switchToParenTabWindowIframe();
 
-	public void switchFrame(String locatorType, String locator);
+	public void switchFrame(String locatorType, String locatorValue);
+	public void dragAndDrop(String locatorType, String sourcelocatorValue,String targetlocatorValue);
+	public void typeUsingKeyboard(String locatorType, String locatorValue,String textToType);
+	public void pressKeyCombination(String combinationKeysName);
 
 }

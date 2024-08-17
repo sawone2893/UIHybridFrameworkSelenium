@@ -30,17 +30,19 @@ import driverFactory.DriverManagerFactory;
 
 public class UiActionsSelenium implements IActionUI {
 
-	DriverManager driverManager;
-	WebDriver driver;
+	private DriverManager driverManager;
+	private WebDriver driver;
 	private static WebElement element = null;
 	private int maxWaitTime = ConfigProp.MAX_WAIT_TIME;
-	JavascriptExecutor jExecutor = null;
+	private JavascriptExecutor jExecutor = null;
+	private Actions action=null;
 
 	@Override
 	public void initializeDriver(String browserType, boolean isHeadlessMode) {
 		driverManager = DriverManagerFactory.getManager(browserType);
 		driver = driverManager.getDriver(isHeadlessMode);
 		jExecutor = (JavascriptExecutor) driver;
+		action=new Actions(driver);
 		driver.manage().window().maximize();
 		driver.manage().deleteAllCookies();
 	}
@@ -62,10 +64,10 @@ public class UiActionsSelenium implements IActionUI {
 	}
 
 	@Override
-	public void click(String locatorType,String locatorValue) {
-		if (this.waitUntillElementAppear(locatorType,locatorValue)) {
-			element = findElement(locatorType,locatorValue);
-			waitUntill(locatorType,locatorValue, "CLICKABLE");
+	public void click(String locatorType, String locatorValue) {
+		if (this.waitUntillElementAppear(locatorType, locatorValue)) {
+			element = findElement(locatorType, locatorValue);
+			waitUntill(locatorType, locatorValue, "CLICKABLE");
 			element.click();
 		} else {
 			Assert.assertTrue(false, "WebElement [" + locatorValue + "] is not clickable.");
@@ -73,9 +75,9 @@ public class UiActionsSelenium implements IActionUI {
 	}
 
 	@Override
-	public void type(String locatorType,String locatorValue, String textToEnter) {
-		if (this.waitUntillElementAppear(locatorType,locatorValue)) {
-			element = findElement(locatorType,locatorValue);
+	public void type(String locatorType, String locatorValue, String textToEnter) {
+		if (this.waitUntillElementAppear(locatorType, locatorValue)) {
+			element = findElement(locatorType, locatorValue);
 			element.sendKeys(textToEnter);
 		} else {
 			Assert.assertTrue(false, "WebElement [" + locatorValue + "] is not enabled.");
@@ -84,9 +86,9 @@ public class UiActionsSelenium implements IActionUI {
 	}
 
 	@Override
-	public void waitUntill(String locatorType,final String locatorValue, final String conditionName) {
+	public void waitUntill(String locatorType, final String locatorValue, final String conditionName) {
 		try {
-			element = findElement(locatorType,locatorValue);
+			element = findElement(locatorType, locatorValue);
 			Function<WebDriver, Boolean> function = new Function<WebDriver, Boolean>() {
 				public Boolean apply(WebDriver driver) {
 					WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(maxWaitTime));
@@ -133,7 +135,8 @@ public class UiActionsSelenium implements IActionUI {
 		wait.until(function);
 
 	}
-
+	
+	@Override
 	public void waitForPageLoad(int time) {
 
 		Function<WebDriver, Boolean> function = new Function<WebDriver, Boolean>() {
@@ -159,8 +162,8 @@ public class UiActionsSelenium implements IActionUI {
 	}
 
 	@Override
-	public boolean isElementDisplayedOrEnabledOrSelected(String locatorType,String locatorValue, String stateType) {
-		element = findElement(locatorType,locatorValue);
+	public boolean isElementDisplayedOrEnabledOrSelected(String locatorType, String locatorValue, String stateType) {
+		element = findElement(locatorType, locatorValue);
 		boolean status = false;
 		switch (stateType.toUpperCase()) {
 		case "DISPLAYED": {
@@ -182,11 +185,11 @@ public class UiActionsSelenium implements IActionUI {
 	}
 
 	@Override
-	public String getAttributeValue(String locatorType,String locatorValue, String attributeName) {
+	public String getAttributeValue(String locatorType, String locatorValue, String attributeName) {
 		String attributeValue = null;
-		waitUntill(locatorType,locatorValue, "VISIBLE");
-		if (this.waitUntillElementAppear(locatorType,locatorValue)) {
-			element = findElement(locatorType,locatorValue);
+		waitUntill(locatorType, locatorValue, "VISIBLE");
+		if (this.waitUntillElementAppear(locatorType, locatorValue)) {
+			element = findElement(locatorType, locatorValue);
 			attributeValue = element.getAttribute(attributeName);
 		} else {
 			Assert.assertTrue(false, "Unable to find attribute value as Web Element is not present in the DOM");
@@ -209,16 +212,17 @@ public class UiActionsSelenium implements IActionUI {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return screenshot;
 	}
 
 	@Override
-	public String takeScreenshot(String locatorType,String locatorValue, String screenshotPath) {
-		String screenshot= null;
+	public String takeScreenshot(String locatorType, String locatorValue, String screenshotPath) {
+		String screenshot = null;
 		try {
-			screenshot = findElement(locatorType,locatorValue).getScreenshotAs(OutputType.BASE64);
-			FileUtils.copyFile(findElement(locatorType,locatorValue).getScreenshotAs(OutputType.FILE), new File(screenshotPath));
+			screenshot = findElement(locatorType, locatorValue).getScreenshotAs(OutputType.BASE64);
+			FileUtils.copyFile(findElement(locatorType, locatorValue).getScreenshotAs(OutputType.FILE),
+					new File(screenshotPath));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -226,32 +230,34 @@ public class UiActionsSelenium implements IActionUI {
 	}
 
 	@Override
-	public void jsClick(String locatorType,String locatorValue) {
-		if (this.waitUntillElementAppear(locatorType,locatorValue)) {
-			element = findElement(locatorType,locatorValue);
+	public void jsClick(String locatorType, String locatorValue) {
+		if (this.waitUntillElementAppear(locatorType, locatorValue)) {
+			element = findElement(locatorType, locatorValue);
 			jExecutor.executeScript("arguments[0].click();", element);
 		} else {
 			Assert.assertTrue(false, "Unable to perform JSClick: Web Element is not present");
 		}
 
 	}
-
-	public String getText(String locatorType,String locatorValue) {
+	
+	@Override
+	public String getText(String locatorType, String locatorValue) {
 		String textValue = null;
-		if (this.waitUntillElementAppear(locatorType,locatorValue)) {
-			element = findElement(locatorType,locatorValue);
+		if (this.waitUntillElementAppear(locatorType, locatorValue)) {
+			element = findElement(locatorType, locatorValue);
 			textValue = element.getText().trim();
 		} else {
 			Assert.assertTrue(false, "Unable to get Text: Web Element is not present");
 		}
 		return textValue;
 	}
-
-	public void scrollToElement(String locatorType,String locatorValue, String scrollType) {
-		if (this.waitUntillElementAppear(locatorType,locatorValue)) {
-			element = findElement(locatorType,locatorValue);
+	
+	@Override
+	public void scrollToElement(String locatorType, String locatorValue, String scrollType) {
+		if (this.waitUntillElementAppear(locatorType, locatorValue)) {
+			element = findElement(locatorType, locatorValue);
 			if (scrollType.equalsIgnoreCase("NORMAL")) {
-				new Actions(driver).scrollToElement(element).perform();
+				action.scrollToElement(element).perform();
 			} else {
 				jExecutor.executeScript("arguments[0].scrollIntoView(true);", element);
 			}
@@ -261,20 +267,22 @@ public class UiActionsSelenium implements IActionUI {
 		}
 
 	}
-
-	public boolean isElementPresent(String locatorType,String locatorValue) {
+	
+	@Override
+	public boolean isElementPresent(String locatorType, String locatorValue) {
 		boolean status = false;
 
-		if (findElements(locatorType,locatorValue).size() > 0 && isElementDisplayedOrEnabledOrSelected(locatorType,locatorValue, "DISPLAYED")
-				&& isElementDisplayedOrEnabledOrSelected(locatorType,locatorValue, "ENABLED")) {
+		if (findElements(locatorType, locatorValue).size() > 0
+				&& isElementDisplayedOrEnabledOrSelected(locatorType, locatorValue, "DISPLAYED")
+				&& isElementDisplayedOrEnabledOrSelected(locatorType, locatorValue, "ENABLED")) {
 			status = true;
 		}
 		return status;
 
 	}
-	
+
 	@Override
-    public WebElement findElement(String locatorType, String locatorValue) {
+	public WebElement findElement(String locatorType, String locatorValue) {
 		WebElement element = null;
 		try {
 			switch (locatorType.toUpperCase()) {
@@ -299,6 +307,17 @@ public class UiActionsSelenium implements IActionUI {
 			case "PARTIALLINKTEXT":
 				element = driver.findElement(By.partialLinkText(locatorValue));
 				break;
+			case "SHADOWDOM":
+				/*
+				 * locatorValue=shadow-host-selector~shadow-element-selector shadow-host-selecto
+				 * = shadowElementLocators[0] shadow-element-selector=shadowElementLocators[1]
+				 */
+				String[] shadowElementLocators = locatorValue.split("~");
+				WebElement shadowHost = driver.findElement(By.cssSelector(shadowElementLocators[0]));
+				WebElement shadowRoot = (WebElement) jExecutor.executeScript("return arguments[0].shadowRoot",
+						shadowHost);
+				element = shadowRoot.findElement(By.cssSelector(shadowElementLocators[0]));
+
 			default:
 				element = driver.findElement(By.className(locatorValue));
 			}
@@ -309,39 +328,39 @@ public class UiActionsSelenium implements IActionUI {
 			e.printStackTrace();
 			Assert.assertTrue(false, "WebDriverException");
 		}
-        
-        return element;
-    }
+
+		return element;
+	}
 
 	@Override
-	public List<WebElement> findElements(String locatorType,String locatorValue) {
+	public List<WebElement> findElements(String locatorType, String locatorValue) {
 		List<WebElement> elements = null;
 		try {
-			switch(locatorType.toUpperCase()){
-            case "ID":
-                elements=driver.findElements(By.id(locatorValue));
-                break;
-            case "XPATH":
-                elements=driver.findElements(By.xpath(locatorValue));
-                break;
-            case "LINKTEXT":
-                elements=driver.findElements(By.linkText(locatorValue));
-                break;
-            case "CSS":
-                elements=driver.findElements(By.cssSelector(locatorValue));
-                break;
-            case "NAME":
-                elements=driver.findElements(By.name(locatorValue));
-                break;
-            case "TAG":
-                elements=driver.findElements(By.tagName(locatorValue));
-                break;
-            case "PARTIALLINKTEXT":
-                elements=driver.findElements(By.partialLinkText(locatorValue));
-                break;
-            default:
-                elements=driver.findElements(By.className(locatorValue));
-        }
+			switch (locatorType.toUpperCase()) {
+			case "ID":
+				elements = driver.findElements(By.id(locatorValue));
+				break;
+			case "XPATH":
+				elements = driver.findElements(By.xpath(locatorValue));
+				break;
+			case "LINKTEXT":
+				elements = driver.findElements(By.linkText(locatorValue));
+				break;
+			case "CSS":
+				elements = driver.findElements(By.cssSelector(locatorValue));
+				break;
+			case "NAME":
+				elements = driver.findElements(By.name(locatorValue));
+				break;
+			case "TAG":
+				elements = driver.findElements(By.tagName(locatorValue));
+				break;
+			case "PARTIALLINKTEXT":
+				elements = driver.findElements(By.partialLinkText(locatorValue));
+				break;
+			default:
+				elements = driver.findElements(By.className(locatorValue));
+			}
 		} catch (NoSuchElementException e) {
 			e.printStackTrace();
 			Assert.assertTrue(false, "NoSuchElementException");
@@ -354,12 +373,12 @@ public class UiActionsSelenium implements IActionUI {
 	}
 
 	@Override
-	public boolean waitUntillElementAppear(String locatorType,String locatorValue) {
+	public boolean waitUntillElementAppear(String locatorType, String locatorValue) {
 		boolean status = true;
 		long startTime, endTime;
 		startTime = System.currentTimeMillis();
 		try {
-			while (!(this.isElementPresent(locatorType,locatorValue))) {
+			while (!(this.isElementPresent(locatorType, locatorValue))) {
 				System.out.println("Waiting for Element[" + locatorValue + "] to be appear...");
 				this.waitForElement(1);
 				endTime = System.currentTimeMillis();
@@ -377,12 +396,12 @@ public class UiActionsSelenium implements IActionUI {
 	}
 
 	@Override
-	public boolean waitUntillElementDisappear(String locatorType,String locatorValue) {
+	public boolean waitUntillElementDisappear(String locatorType, String locatorValue) {
 		boolean status = true;
 		long startTime, endTime;
 		startTime = System.currentTimeMillis();
 		try {
-			while ((this.isElementPresent(locatorType,locatorValue))) {
+			while ((this.isElementPresent(locatorType, locatorValue))) {
 				System.out.println("Waiting for Element[" + locatorValue + "] to be disappear...");
 				this.waitForElement(1);
 				endTime = System.currentTimeMillis();
@@ -422,8 +441,8 @@ public class UiActionsSelenium implements IActionUI {
 
 	@Override
 	public void switchToOpenedTabWindow(int windowTabIndex) {
-		ArrayList<String> openWindows= new ArrayList<>(driver.getWindowHandles());
-        driver.switchTo().window(openWindows.get(windowTabIndex));
+		ArrayList<String> openWindows = new ArrayList<>(driver.getWindowHandles());
+		driver.switchTo().window(openWindows.get(windowTabIndex));
 	}
 
 	@Override
@@ -436,57 +455,82 @@ public class UiActionsSelenium implements IActionUI {
 	}
 
 	@Override
-	public void hoverElement(String locatorType,String locatorValue) {
-		if (this.waitUntillElementAppear(locatorType,locatorValue)) {
-			element = findElement(locatorType,locatorValue);
-			new Actions(driver)
-            .moveToElement(element)
-            .perform();
+	public void hoverElement(String locatorType, String locatorValue) {
+		if (this.waitUntillElementAppear(locatorType, locatorValue)) {
+			element = findElement(locatorType, locatorValue);
+			action.moveToElement(element).perform();
 		} else {
 			Assert.assertTrue(false, "Unable to do hover: Web Element is not present");
 		}
-		
+
 	}
 
 	@Override
-	public void rightClickElement(String locatorType,String locatorValue) {
-		if (this.waitUntillElementAppear(locatorType,locatorValue)) {
-			element = findElement(locatorType,locatorValue);
-			new Actions(driver)
-            .contextClick(element)
-            .perform();
+	public void rightClickElement(String locatorType, String locatorValue) {
+		if (this.waitUntillElementAppear(locatorType, locatorValue)) {
+			element = findElement(locatorType, locatorValue);
+			action.contextClick(element).perform();
 		} else {
 			Assert.assertTrue(false, "Unable to do right click: Web Element is not present");
 		}
-		
+
 	}
 
 	@Override
-	public void doubleClickElement(String locatorType,String locatorValue) {
-		if (this.waitUntillElementAppear(locatorType,locatorValue)) {
-			element = findElement(locatorType,locatorValue);
-			 new Actions(driver)
-             .doubleClick(element)
-             .perform();
+	public void doubleClickElement(String locatorType, String locatorValue) {
+		if (this.waitUntillElementAppear(locatorType, locatorValue)) {
+			element = findElement(locatorType, locatorValue);
+			action.doubleClick(element).perform();
 		} else {
 			Assert.assertTrue(false, "Unable to do double : Web Element is not present");
 		}
-		
+
 	}
-	
+
 	@Override
 	public String getPageTitle() {
 		return driver.getTitle();
 	}
+
+	@Override
+	public void switchToParenTabWindowIframe() {
+		driver.switchTo().defaultContent();
+	}
+
+	@Override
+	public void switchFrame(String locatorType, String locatorValue) {
+
+		switch (locatorType.toUpperCase()) {
+		case "INDEX":
+			driver.switchTo().frame(Integer.parseInt(locatorValue));
+			break;
+		case "NAMEORID":
+			driver.switchTo().frame(locatorValue);
+			break;
+		default:
+			driver.switchTo().frame(this.findElement(locatorType, locatorValue));
+		}
+
+	}
 	
-    @Override
-    public void switchToParenTabWindow(){
-        driver.switchTo().defaultContent();
-    }
-
-    @Override
-    public void switchFrame(String locatorType, String locator) {
-
-    }
+	@Override
+	public void dragAndDrop(String locatorType, String sourceLocatorValue,String targetLocatorValue) {
+		action.dragAndDrop(this.findElement(locatorType, sourceLocatorValue), this.findElement(locatorType, targetLocatorValue)).perform();
+	}
+	
+	@Override
+	public void typeUsingKeyboard(String locatorType, String locatorValue,String textToType) {
+		action.click(this.findElement(locatorType, locatorValue)).sendKeys(textToType).perform();
+	}
+	
+	@Override
+	public void pressKeyCombination(String combinationKeysName) {
+		if(combinationKeysName.contains(",")) {
+			String keys[]=combinationKeysName.split(",");
+			action.keyDown(KeysName.getKey(keys[0])).sendKeys(keys[1]).keyUp(KeysName.getKey(keys[0])).perform();
+		}else {
+			action.sendKeys(KeysName.getKey(combinationKeysName)).perform();
+		}
+	}
 
 }
