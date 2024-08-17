@@ -18,57 +18,57 @@ public class BaseClass {
 		globalUIDriver.closeBrowser();
 	}
 
-	public static void click(String locatorValue) {
-		globalUIDriver.clickElement(locatorValue);
+	public static void click(String locatorType,String locatorValue) {
+		globalUIDriver.click(locatorType,locatorValue);
 	}
 
-	public static void type(String locatorValue, String textToEnter) {
-		globalUIDriver.enterTextOnElement(locatorValue, textToEnter);
+	public static void type(String locatorType,String locatorValue, String textToEnter) {
+		globalUIDriver.type(locatorType,locatorValue, textToEnter);
 	}
 
 	public static void waitForPageToBeLoad(int timeInSeconds) {
 		globalUIDriver.waitForPageLoad(timeInSeconds);
 	}
 
-	public static boolean isElementDisplayedOrEnabledOrSelected(String locatorValue, String state) {
-		return globalUIDriver.isElementDisplayedOrEnabledOrSelected(locatorValue, state);
+	public static boolean isElementDisplayedOrEnabledOrSelected(String locatorType,String locatorValue, String state) {
+		return globalUIDriver.isElementDisplayedOrEnabledOrSelected(locatorType,locatorValue, state);
 	}
 
-	public static void scrollToElement(String locatorValue) {
-		globalUIDriver.scrollToElement(locatorValue,"NORMAL");
+	public static void scrollToElement(String locatorType,String locatorValue) {
+		globalUIDriver.scrollToElement(locatorType,locatorValue,"NORMAL");
 	}
 
 	
-	public static void waitUntill(String locatorValue, String conditionName) {
-		globalUIDriver.waitUntill(locatorValue, conditionName);
+	public static void waitUntill(String locatorType,String locatorValue, String conditionName) {
+		globalUIDriver.waitUntill(locatorType,locatorValue, conditionName);
 	}
 
-	public static String getElementAttribute(String locatorValue, String attributeName) {
-		return globalUIDriver.getAttributeValue(locatorValue, attributeName);
+	public static String getElementAttribute(String locatorType,String locatorValue, String attributeName) {
+		return globalUIDriver.getAttributeValue(locatorType,locatorValue, attributeName);
 	}
 
 	public static void waitForElement(int timeInSeconds) {
 		globalUIDriver.waitForElement(timeInSeconds);
 	}
 
-	public static void jsClick(String locatorValue) {
-		globalUIDriver.jsClick(locatorValue);
+	public static void jsClick(String locatorType,String locatorValue) {
+		globalUIDriver.jsClick(locatorType,locatorValue);
 	}
 
-	public static String getElementText(String locatorValue) {
-		return globalUIDriver.getText(locatorValue);
+	public static String getElementText(String locatorType,String locatorValue) {
+		return globalUIDriver.getText(locatorType,locatorValue);
 	}
 	
-	public static void waitUntillElementAppear(String locatorValue) {
-		globalUIDriver.waitUntillElementAppear(locatorValue);
+	public static void waitUntillElementAppear(String locatorType,String locatorValue) {
+		globalUIDriver.waitUntillElementAppear(locatorType,locatorValue);
 	}
 	
 	public static String snap(String screenshotPath) {
 		return globalUIDriver.takeScreenshot(System.getProperty("user.dir")+screenshotPath);
 	}
 	
-	public static String snap(String locatorValue,String screenshotPath) {
-		return globalUIDriver.takeScreenshot(locatorValue,System.getProperty("user.dir")+screenshotPath);
+	public static String snap(String locatorType,String locatorValue,String screenshotPath) {
+		return globalUIDriver.takeScreenshot(locatorType,locatorValue,System.getProperty("user.dir")+screenshotPath);
 	}
 	
 	public static String getTitle() {

@@ -22,10 +22,10 @@ public class TestActionExecutor{
 	public void executeAction(TestSteps steps) {
 		switch (steps.getAction()) {
 		case "Click":{
-			BaseClass.click(steps.getLocator());
+			BaseClass.click(steps.getLocatorType(),steps.getLocator());
 			break;
 		}case "EnterValue":{
-			BaseClass.type( steps.getLocator(),steps.getValue());
+			BaseClass.type(steps.getLocatorType(), steps.getLocator(),steps.getValue());
 			break;
 		}case "WaitForElement":{
 			BaseClass.waitForElement(Integer.parseInt(steps.getValue()));
@@ -34,25 +34,25 @@ public class TestActionExecutor{
 			BaseClass.waitForPageToBeLoad(Integer.parseInt(steps.getValue()));
 			break;	
 		}case "JSClick":{
-			BaseClass.jsClick(steps.getLocator());
+			BaseClass.jsClick(steps.getLocatorType(),steps.getLocator());
 			break;	
 		}case "ScrollToElement":{
-			BaseClass.scrollToElement(steps.getLocator());
+			BaseClass.scrollToElement(steps.getLocatorType(),steps.getLocator());
 			break;
 		}case "VerifyAttributeValue":{
-			BaseClass.waitUntillElementAppear(steps.getLocator());
+			BaseClass.waitUntillElementAppear(steps.getLocatorType(),steps.getLocator());
 			String attriValue[]=steps.getValue().split("|");
-			String status=BaseClass.getElementAttribute(steps.getLocator(),attriValue[0]);
+			String status=BaseClass.getElementAttribute(steps.getLocatorType(),steps.getLocator(),attriValue[0]);
 			Assert.assertEquals(status, attriValue[1],"Expected: "+attriValue[1]+" Actual: "+status);
 			break;
 		}case "VerifyTextValue":{
-			BaseClass.waitUntillElementAppear(steps.getLocator());
-			String textValue=BaseClass.getElementText(steps.getLocator());
+			BaseClass.waitUntillElementAppear(steps.getLocatorType(),steps.getLocator());
+			String textValue=BaseClass.getElementText(steps.getLocatorType(),steps.getLocator());
 			Assert.assertEquals(textValue, steps.getValue(),"Expected: "+steps.getValue()+" Actual: "+textValue);
 			break;
 		}case "VerifyVisibility":{
-			BaseClass.waitUntillElementAppear(steps.getLocator());
-			boolean status=BaseClass.isElementDisplayedOrEnabledOrSelected(steps.getLocator(), "DISPLAYED");
+			BaseClass.waitUntillElementAppear(steps.getLocatorType(),steps.getLocator());
+			boolean status=BaseClass.isElementDisplayedOrEnabledOrSelected(steps.getLocatorType(),steps.getLocator(), "DISPLAYED");
 			Assert.assertEquals(status,Boolean.parseBoolean(steps.getValue()));
 			break;
 		}case "VerifyPageTitle":{

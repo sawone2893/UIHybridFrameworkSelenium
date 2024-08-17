@@ -14,54 +14,58 @@ public interface IActionUI {
 
 	public void openURL(String url);
 
-	public void clickElement(String locatorValue);
+	public void click(String locatorType,String locatorValue);
 
-	public void enterTextOnElement(String locatorValue, String textToEnter);
+	public void type(String locatorType,String locatorValue, String textToEnter);
 
 	public void waitForElement(int seconds);
 
-	public boolean isElementDisplayedOrEnabledOrSelected(String locatorValue, String state);
+	public boolean isElementDisplayedOrEnabledOrSelected(String locatorType,String locatorValue, String state);
 
-	public boolean isElementPresent(String locatorValue);
+	public boolean isElementPresent(String locatorType,String locatorValue);
 
-	public String getAttributeValue(String locatorValue, String attributeName);
+	public String getAttributeValue(String locatorType,String locatorValue, String attributeName);
 
-	public String getText(String locatorValue);
+	public String getText(String locatorType,String locatorValue);
 
 	public String getURL();
 
 	public String takeScreenshot(String screenshotPath);
 
-	public String takeScreenshot(String locatorValue, String screenshotPath);
+	public String takeScreenshot(String locatorType,String locatorValue, String screenshotPath);
 
-	public void jsClick(String locatorValue);
+	public void jsClick(String locatorType,String locatorValue);
 
-	public WebElement findElement(String locatorValue);
+	public WebElement findElement(String locatorType, String locatorValue);
 
-	public List<WebElement> findElements(String locatorValue);
+	public List<WebElement> findElements(String locatorType,String locatorValue);
 
-	public void waitUntill(final String locatorValue, final String conditionName);
+	public void waitUntill(String locatorType,final String locatorValue, final String conditionName);
 
 	public void waitForPageLoad(int timeInSeconds);
 
-	public void scrollToElement(String locatorValue, String scrollType);
+	public void scrollToElement(String locatorType,String locatorValue, String scrollType);
 
-	public boolean waitUntillElementAppear(String locatorValue);
+	public boolean waitUntillElementAppear(String locatorType,String locatorValue);
 
-	public boolean waitUntillElementDisappear(String locatorValue);
+	public boolean waitUntillElementDisappear(String locatorType,String locatorValue);
 
 	public void navigateTo(String direction);
 
-	public void performWindowTabSwitch(int windowTabIndex);
+	public void switchToOpenedTabWindow(int windowTabIndex);
 
 	public void createNewWindowTabSwitch(String type);
 
-	public void hoverElement(String locatorValue);
+	public void hoverElement(String locatorType,String locatorValue);
 
-	public void rightClickElement(String locatorValue);
+	public void rightClickElement(String locatorType,String locatorValue);
 
-	public void doubleClickElement(String locatorValue);
+	public void doubleClickElement(String locatorType,String locatorValue);
 
 	public String getPageTitle();
+
+	public void switchToParenTabWindow();
+
+	public void switchFrame(String locatorType, String locator);
 
 }
