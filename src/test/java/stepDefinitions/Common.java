@@ -3,19 +3,19 @@ package stepDefinitions;
 import java.util.List;
 import java.util.Map;
 
-import actionsKeyword.TestExecutor;
-import actionsKeyword.TestSteps;
 import config.ConfigProp;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import pageInstancesFactory.PageInstanceFactory;
+import pageInstances.PageInstanceFactory;
+import testActionsKeyword.TestActionExecutor;
+import testActionsKeyword.TestSteps;
 import utililties.ExtentReportManager;
 
 public class Common {
 
-	TestExecutor testExecutor = PageInstanceFactory.getTestExecutor();
+	TestActionExecutor testExecutor = PageInstanceFactory.getTestExecutor();
 	TestSteps steps = PageInstanceFactory.getTestSteps();
 	boolean logStatus=ConfigProp.LOG_MODE;
 

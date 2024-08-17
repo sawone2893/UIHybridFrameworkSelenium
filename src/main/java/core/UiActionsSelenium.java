@@ -36,9 +36,9 @@ public class UiActionsSelenium implements IActionUI {
 	JavascriptExecutor jExecutor = null;
 
 	@Override
-	public void initialize(String browserType, boolean isHeadless) {
+	public void initializeDriver(String browserType, boolean isHeadlessMode) {
 		driverManager = DriverManagerFactory.getManager(browserType);
-		driver = driverManager.getDriver(isHeadless);
+		driver = driverManager.getDriver(isHeadlessMode);
 		jExecutor = (JavascriptExecutor) driver;
 		driver.manage().window().maximize();
 		driver.manage().deleteAllCookies();
@@ -58,11 +58,6 @@ public class UiActionsSelenium implements IActionUI {
 	public void openURL(String url) {
 		System.out.println("Opening url:" + url);
 		driver.get(url);
-	}
-
-	@Override
-	public void refresh() {
-		driver.navigate().refresh();
 	}
 
 	@Override
@@ -431,7 +426,7 @@ public class UiActionsSelenium implements IActionUI {
 	}
 	
 	@Override
-	public String getTitle() {
+	public String getPageTitle() {
 		return driver.getTitle();
 	}
 

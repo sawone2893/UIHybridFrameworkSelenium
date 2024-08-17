@@ -9,8 +9,8 @@ public class BaseClass {
 	public static IActionUI globalUIDriver = null;
 
 	public static void appStart() {
-		globalUIDriver = ToolFactory.uiToolInstance(ConfigProp.UI_TOOL_NAME);
-		globalUIDriver.initialize(ConfigProp.BROWSER_NAME, ConfigProp.IS_HEADLESS_MODE);
+		globalUIDriver = ToolFactory.getToolInstance(ConfigProp.TOOL_NAME);
+		globalUIDriver.initializeDriver(ConfigProp.BROWSER_TYPE, ConfigProp.IS_HEADLESS_MODE);
 		globalUIDriver.openURL(ConfigProp.APP_URL);
 	}
 
@@ -72,7 +72,7 @@ public class BaseClass {
 	}
 	
 	public static String getTitle() {
-		return globalUIDriver.getTitle();
+		return globalUIDriver.getPageTitle();
 	}
 
 }

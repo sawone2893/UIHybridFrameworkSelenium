@@ -8,7 +8,7 @@ import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
 import utililties.ExtentReportManager;
 
-public class BaseCucumberHooks {
+public class Hooks {
 
 	@Before
 	public void beforeScenario(Scenario scenario) {

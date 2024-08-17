@@ -1,4 +1,4 @@
-package actionsKeyword;
+package testActionsKeyword;
 
 import org.testng.Assert;
 
@@ -6,15 +6,15 @@ import base.BaseClass;
 import config.ConfigProp;
 import utililties.PropertyManager;
 
-public class TestExecutor{
+public class TestActionExecutor{
 
-	private static TestExecutor testExecutor=null;
+	private static TestActionExecutor testExecutor=null;
 	
-	private TestExecutor() {}
+	private TestActionExecutor() {}
 	
-	public static TestExecutor getInstance() {
+	public static TestActionExecutor getInstance() {
 		if(testExecutor==null) {
-			testExecutor=new TestExecutor();
+			testExecutor=new TestActionExecutor();
 		}
 		return testExecutor;
 	}

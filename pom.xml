@@ -26,7 +26,6 @@
 		<cucumbercore.version>7.13.0</cucumbercore.version>
 		<cucumbertestng.version>7.13.0</cucumbertestng.version>
 		<gherkin.version>26.2.0</gherkin.version>
-		<extentreportscucumber7adapter.version>1.14.0</extentreportscucumber7adapter.version>
 		<log4jcore.version>2.16.0</log4jcore.version>
 		<log4jweb.version>2.16.0</log4jweb.version>
 		<poi.version>3.9</poi.version>

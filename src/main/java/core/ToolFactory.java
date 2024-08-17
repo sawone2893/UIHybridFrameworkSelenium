@@ -5,15 +5,15 @@ public class ToolFactory {
 	static IActionUI actionUI=null;
 
 	
-	public static IActionUI uiToolInstance(String uiDriverName) {
-		switch (uiDriverName.toLowerCase()) {
-		case "selenium":{
-			System.out.println("Create Instance for "+uiDriverName);
+	public static IActionUI getToolInstance(String toolName) {
+		switch (toolName.toUpperCase()) {
+		case "SELENIUM":{
+			System.out.println("Create Instance for "+toolName);
 			actionUI = new UiActionsSelenium();
 			break;
 		}
 		default:{
-			System.out.println("Unsupported UI Driver Name: " + uiDriverName);
+			System.out.println("Unsupported UI Driver Name: " + toolName);
 		}	
 		}
 		return actionUI;

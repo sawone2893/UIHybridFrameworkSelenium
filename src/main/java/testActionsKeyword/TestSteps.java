@@ -1,4 +1,4 @@
-package actionsKeyword;
+package testActionsKeyword;
 
 public class TestSteps {
 

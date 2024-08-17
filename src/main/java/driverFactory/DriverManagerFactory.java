@@ -1,9 +1,9 @@
 package driverFactory;
 
 public class DriverManagerFactory {
-	public static DriverManager getManager(String browsertype) {
+	public static DriverManager getManager(String browserType) {
 		DriverManager driverManager;
-		switch (browsertype.toUpperCase()) {
+		switch (browserType.toUpperCase()) {
 		case "CHROME":
 			driverManager = new ChromeDriverManager();
 			break;

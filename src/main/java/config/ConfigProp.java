@@ -11,8 +11,8 @@ public class ConfigProp {
 	public static final String REPORT_PATH = "/reports/";
 	public static final String SCREENSHOT_PATH = "/reports/screenshots/";
 	
-	public static final String UI_TOOL_NAME = "Selenium";
-	public static final String BROWSER_NAME = "chrome";
+	public static final String TOOL_NAME = "SELENIUM";
+	public static final String BROWSER_TYPE = "CHROME";
 	public static final boolean IS_HEADLESS_MODE =false;
 	public static final boolean LOG_MODE =true;
 	public static final String APP_URL = PropertyManager.getAnyProperty(ENV_CONFIG_PATH, "APPURL");
