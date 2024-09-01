@@ -20,3 +20,7 @@ To generate Access Token
 8. To give your token an expiration, select the Expiration drop-down menu, then click a default or use the calendar picker
 9. Select the scopes, or permissions, you'd like to grant this token. To use your token to access repositories from the command line, select repo.
 10. Click Generate token
+
+Unable to connect to repo:
+In your Eclipse Editor, Right click on your project -> Team -> Remote -> Configure Push to Upstream
+Once the window opens, click "change..." button. Now you'll get a window called 'Select a URI'.
