@@ -1,17 +1,20 @@
 package base;
 
 import config.ConfigProp;
-import io.github.shabryn2893.selAutoCore.uiCore.IActionUI;
-import io.github.shabryn2893.selAutoCore.uiCore.UIToolFactory;
+import io.github.shabryn2893.uicore.IActionUI;
+import io.github.shabryn2893.uidriverfactory.DriverFactory;
+import io.github.shabryn2893.uidriverfactory.DriverManager;
 
 public class BaseClass {
 
 	public static IActionUI globalUIDriver = null;
 	private static int maxWaitTime=ConfigProp.MAX_WAIT_TIME;
 
+	private BaseClass() {}
+	
 	public static void appStart() {
-		globalUIDriver = UIToolFactory.getToolInstance(ConfigProp.TOOL_NAME);
-		globalUIDriver.initializeDriver(ConfigProp.BROWSER_TYPE, ConfigProp.IS_HEADLESS_MODE);
+		DriverManager driverManager=DriverFactory.getDriver(ConfigProp.BROWSER_TYPE, ConfigProp.TOOL_NAME, ConfigProp.IS_HEADLESS_MODE);
+		globalUIDriver=driverManager.createBrowser();
 		globalUIDriver.openURL(ConfigProp.APP_URL);
 	}
 
@@ -37,11 +40,6 @@ public class BaseClass {
 
 	public static void scrollToElement(String locatorType,String locatorValue) {
 		globalUIDriver.scrollToElement(locatorType,locatorValue,"NORMAL",maxWaitTime);
-	}
-
-	
-	public static void waitUntill(String locatorType,String locatorValue, String conditionName) {
-		globalUIDriver.waitUntill(locatorType,locatorValue, conditionName,maxWaitTime);
 	}
 
 	public static String getElementAttribute(String locatorType,String locatorValue, String attributeName) {

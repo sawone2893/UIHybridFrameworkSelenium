@@ -10,26 +10,18 @@
 	<version>1.0-SNAPSHOT</version>
 
 	<name>UIHybridFrameworkSelenium</name>
-	<!-- FIXME change it to the project's website -->
 	<url>http://www.example.com</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.source>17</maven.compiler.source>
-		<maven.compiler.target>17</maven.compiler.target>
-		<selAutoCore.version>0.0.1</selAutoCore.version>
+		<maven.compiler.source>21</maven.compiler.source>
+		<maven.compiler.target>21</maven.compiler.target>
+		<selAutoCore.version>0.0.4</selAutoCore.version>
 		<testng.version>7.10.2</testng.version>
-		<slf4japi.version>2.0.8</slf4japi.version>
-		<slf4simple.version>2.0.8</slf4simple.version>
 		<cucumberjava.version>7.13.0</cucumberjava.version>
 		<cucumbercore.version>7.13.0</cucumbercore.version>
 		<cucumbertestng.version>7.13.0</cucumbertestng.version>
 		<gherkin.version>26.2.0</gherkin.version>
-		<log4jcore.version>2.16.0</log4jcore.version>
-		<log4jweb.version>2.16.0</log4jweb.version>
-		<poi.version>3.9</poi.version>
-		<poiooxml.version>3.9</poiooxml.version>
-		<xmlbeans.version>2.6.0</xmlbeans.version>
 	</properties>
 
 	<dependencies>
@@ -45,21 +37,6 @@
 			<artifactId>testng</artifactId>
 			<version>${testng.version}</version>
 		</dependency>
-		<!-- Below dependencies are added just resolve Error: Failed to load
-		class "org.slf4j.impl.StaticMDCBinder -->
-		<!-- Start Here -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>${slf4japi.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-simple</artifactId>
-			<version>${slf4simple.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<!-- End Here -->
 		<!-- Cucumber Start Here -->
 		<!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-java -->
 		<dependency>
@@ -89,7 +66,6 @@
 		<!-- Cucumber Ends Here -->
 
 		<!--Extent Reports Jars Start -->
-		<!-- Extent Reports Dependencies -->
 		<dependency>
 			<groupId>com.aventstack</groupId>
 			<artifactId>extentreports</artifactId>
@@ -100,43 +76,7 @@
 			<artifactId>freemarker</artifactId>
 			<version>2.3.33</version>
 		</dependency>
-
 		<!--Extent Reports Jars End -->
-
-		<!-- Logging Framework Jars Start -->
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-core</artifactId>
-			<version>${log4jcore.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-web</artifactId>
-			<version>${log4jweb.version}</version>
-		</dependency>
-		<!-- Logging Framework Jars End -->
-
-		<!-- Excel Handling Jars Start -->
-
-		<dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi</artifactId>
-			<version>${poi.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi-ooxml</artifactId>
-			<version>${poiooxml.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.xmlbeans</groupId>
-			<artifactId>xmlbeans</artifactId>
-			<version>${xmlbeans.version}</version>
-		</dependency>
-
-		<!-- Excel Handling Jars End -->
 
 	</dependencies>
 

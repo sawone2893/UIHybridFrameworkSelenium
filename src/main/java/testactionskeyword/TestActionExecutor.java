@@ -1,10 +1,10 @@
-package testActionsKeyword;
+package testactionskeyword;
 
 import org.testng.Assert;
 
 import base.BaseClass;
 import config.ConfigProp;
-import utililties.PropertyManager;
+import io.github.shabryn2893.utils.PropertyFileManager;
 
 public class TestActionExecutor{
 
@@ -41,7 +41,7 @@ public class TestActionExecutor{
 			break;
 		}case "VerifyAttributeValue":{
 			BaseClass.waitUntillElementAppear(steps.getLocatorType(),steps.getLocator());
-			String attriValue[]=steps.getValue().split("|");
+			String[] attriValue=steps.getValue().split("|");
 			String status=BaseClass.getElementAttribute(steps.getLocatorType(),steps.getLocator(),attriValue[0]);
 			Assert.assertEquals(status, attriValue[1],"Expected: "+attriValue[1]+" Actual: "+status);
 			break;
@@ -66,12 +66,11 @@ public class TestActionExecutor{
 	}
 	
 	public String generateLocator(String locatorIdentifier, String paramValues){
-		String xpath = PropertyManager.getAnyProperty(ConfigProp.LOCATORS_PATH, locatorIdentifier);
+		String xpath = PropertyFileManager.getProperty(ConfigProp.LOCATORS_PATH, locatorIdentifier);
 		String locatorValue = xpath;
 		if (paramValues.contains("~")) {
 			String[] parameters = paramValues.split("~");
 			int j = parameters.length;
-			// logger_method().info(j);
 			for (int i = 0; i < j; i++) {
 				String replacement = parameters[i];
 				locatorValue = xpath.replace("$" + i + "$", replacement);

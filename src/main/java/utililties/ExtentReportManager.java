@@ -4,39 +4,60 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
-
 import config.ConfigProp;
 
 public class ExtentReportManager {
-    private static ExtentReports extent;
-    private static ExtentSparkReporter sparkReporter;
-    private static ThreadLocal<ExtentTest> test = new ThreadLocal<>();
 
-    public static ExtentReports getInstance() {
-        if (extent == null) {
-            sparkReporter = new ExtentSparkReporter(System.getProperty("user.dir")+ConfigProp.REPORT_PATH+"executionReport.html");
-            sparkReporter.config().setTheme(Theme.STANDARD);
-            sparkReporter.config().setDocumentTitle("Automation Execution Report");
-            sparkReporter.config().setReportName("Regression Report");
-            extent = new ExtentReports();
-            extent.attachReporter(sparkReporter);
-        }
-        return extent;
-    }
+	// ThreadLocal to manage test instance per thread
+	private static final ThreadLocal<ExtentTest> test = new ThreadLocal<>();
 
-    public static ExtentTest createTest(String testName, String description) {
-        ExtentTest extentTest = extent.createTest(testName, description);
-        test.set(extentTest);
-        return extentTest;
-    }
+	// Private constructor to prevent instantiation
+	private ExtentReportManager() {
+		// Prevent instantiation
+	}
 
-    public static ExtentTest getTest() {
-        return test.get();
-    }
+	// Singleton Holder class for lazy initialization of ExtentReports
+	private static class ExtentReportHolder {
+		private static final ExtentReports INSTANCE = createInstance();
+	}
 
-    public static void flush() {
-        if (extent != null) {
-            extent.flush();
-        }
-    }
+	// Get the singleton instance of ExtentReports
+	public static ExtentReports getInstance() {
+		return ExtentReportHolder.INSTANCE;
+	}
+
+	// Initializes ExtentReports and configures the reporter
+	private static ExtentReports createInstance() {
+		ExtentSparkReporter sparkReporter = new ExtentSparkReporter(ConfigProp.REPORT_PATH + "executionReport.html");
+
+		sparkReporter.config().setTheme(Theme.STANDARD);
+		sparkReporter.config().setDocumentTitle("Automation Execution Report");
+		sparkReporter.config().setReportName("Regression Report");
+
+		ExtentReports extent = new ExtentReports();
+		extent.attachReporter(sparkReporter);
+		return extent;
+	}
+
+	// Creates a new test instance and stores it in the ThreadLocal variable
+	public static ExtentTest createTest(String testName, String description) {
+		ExtentTest extentTest = getInstance().createTest(testName, description);
+		test.set(extentTest);
+		return extentTest;
+	}
+
+	// Retrieves the current thread's test instance
+	public static ExtentTest getTest() {
+		return test.get();
+	}
+
+	// Flushes the extent report, ensuring that resources are released
+	public static void flush() {
+		getInstance().flush(); // No need to check for null, getInstance() handles initialization
+	}
+
+	// Cleans up the ThreadLocal to avoid memory leaks
+	public static void cleanUp() {
+		test.remove();
+	}
 }

@@ -1,7 +1,7 @@
 package pageInstances;
 
-import testActionsKeyword.TestActionExecutor;
-import testActionsKeyword.TestSteps;
+import testactionskeyword.TestActionExecutor;
+import testactionskeyword.TestSteps;
 
 public class PageInstanceFactory {
 	public static TestActionExecutor getTestExecutor(){return TestActionExecutor.getInstance();}

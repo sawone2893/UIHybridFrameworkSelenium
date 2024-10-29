@@ -9,8 +9,8 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import pageInstances.PageInstanceFactory;
-import testActionsKeyword.TestActionExecutor;
-import testActionsKeyword.TestSteps;
+import testactionskeyword.TestActionExecutor;
+import testactionskeyword.TestSteps;
 import utililties.ExtentReportManager;
 
 public class Common {
