@@ -16,7 +16,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>21</maven.compiler.source>
 		<maven.compiler.target>21</maven.compiler.target>
-		<selAutoCore.version>0.0.4</selAutoCore.version>
+		<autoNxt.version>0.0.1</autoNxt.version>
 		<testng.version>7.10.2</testng.version>
 		<cucumberjava.version>7.13.0</cucumberjava.version>
 		<cucumbercore.version>7.13.0</cucumbercore.version>
@@ -27,8 +27,8 @@
 	<dependencies>
 		<dependency>
 			<groupId>io.github.shabryn2893</groupId>
-			<artifactId>selAutoCore</artifactId>
-			<version>${selAutoCore.version}</version>
+			<artifactId>autoNxt</artifactId>
+			<version>${autoNxt.version}</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
 		

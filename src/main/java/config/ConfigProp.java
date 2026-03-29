@@ -8,7 +8,7 @@ public class ConfigProp {
 
 	public static final String PROJECT_PATH=System.getProperty("user.dir");
 	public static final String DOWNLOAD_PATH = PROJECT_PATH+"/resources/downloads";
-	public static final String LOCATORS_PATH=PROJECT_PATH+"/resources/locators/locators";
+	public static final String LOCATORS_PATH=PROJECT_PATH+"/resources/locators/locators.properties";
 	public static final String ENV_CONFIG_PATH = PROJECT_PATH+"/resources/envConfig/qaEnvConfig.properties";
 	public static final String REPORT_CONFIG_PATH = PROJECT_PATH+"/resources/reportConfig/";
 	public static final String REPORT_PATH = PROJECT_PATH+"/reports/";

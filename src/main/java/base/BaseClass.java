@@ -35,7 +35,15 @@ public class BaseClass {
 	}
 
 	public static boolean isElementDisplayedOrEnabledOrSelected(String locatorType,String locatorValue, String state) {
-		return globalUIDriver.isElementDisplayedOrEnabledOrSelected(locatorType,locatorValue, state);
+		boolean status;
+		if(state.equalsIgnoreCase("DISPLAYED")) {
+			status=globalUIDriver.isElementDisplayed(locatorType, locatorValue);
+		}else if(state.equalsIgnoreCase("ENABLED")) {
+			status=globalUIDriver.isElementEnabled(locatorType, locatorValue);
+		}else {
+			status=globalUIDriver.isElementSelected(locatorType, locatorValue);
+		}
+		return status;
 	}
 
 	public static void scrollToElement(String locatorType,String locatorValue) {

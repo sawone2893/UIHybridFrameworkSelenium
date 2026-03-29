@@ -1,6 +1,5 @@
 Feature: User Place Order
 
-  @sanity
   Scenario Outline: Verify user is able to place order
     Given I "VerifyPageTitle" "A place to practice your automation skills!"
     When I "Click" on "TagWithText" with "XPATH" values "a~Login or register"

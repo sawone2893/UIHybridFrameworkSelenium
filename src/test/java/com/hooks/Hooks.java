@@ -1,4 +1,4 @@
-package hooks;
+package com.hooks;
 
 import base.BaseClass;
 import config.ConfigProp;

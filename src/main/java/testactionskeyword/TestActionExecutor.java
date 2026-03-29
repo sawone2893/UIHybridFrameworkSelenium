@@ -20,7 +20,7 @@ public class TestActionExecutor{
 	}
 
 	public void executeAction(TestSteps steps) {
-		switch (steps.getAction()) {
+		switch (steps.getAction()) {	
 		case "Click":{
 			BaseClass.click(steps.getLocatorType(),steps.getLocator());
 			break;
